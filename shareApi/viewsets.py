@@ -1,6 +1,7 @@
+from django.core.serializers import serialize
 from rest_framework import viewsets
-from .serializers import UserProfileSerializers, ShareSerializers
-from .models import UserProfile, Share
+from .serializers import UserProfileSerializers, ShareSerializers, ShareResultSerializers
+from .models import UserProfile, Share, ShareResult
 
 
 class UserProfileViewSets(viewsets.ModelViewSet):
@@ -10,3 +11,7 @@ class UserProfileViewSets(viewsets.ModelViewSet):
 class ShareViewSets(viewsets.ReadOnlyModelViewSet):
     queryset = Share.objects.all()
     serializer_class = ShareSerializers
+
+class ShareResultViewSets(viewsets.ReadOnlyModelViewSet):
+    queryset = ShareResult.objects.all()
+    serializer_class = ShareResultSerializers

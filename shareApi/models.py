@@ -25,9 +25,9 @@ class Share(models.Model):
 class ShareResult(models.Model):
     user = models.OneToOneField(UserProfile,on_delete=models.CASCADE, primary_key=True)
     share = models.ForeignKey(Share, on_delete=models.CASCADE)
-    alloted_units = models.IntegerField(default=0)
+    alloted_units = models.IntegerField(default=0, blank=True)
     alloted = models.BooleanField(default=False)
-    created_date = models.DateTimeField(default=timezone.now)
+    created_date = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         return self.user.first_name + '-' + self.share.name + ('-alloted' if self.alloted else '-not alloted')
