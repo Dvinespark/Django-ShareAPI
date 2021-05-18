@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from shareApi.models import Share
 
 # for headless browsing
 from selenium.webdriver.firefox.options import Options
@@ -43,9 +44,16 @@ def extract_share_page():
     page = send_request()
     select_tag = page.find("select")
     options = select_tag.find_all("option")
+    result = {}
     for option in options:
-        print('--------------------------')
-        print(option.text)
-        print(option['value'])
-        print('--------------------------')
-    return 1
+        result[option.text] = option['value']
+    return result
+
+def save_share(data):
+    for key, value in data.items():
+        if not Share.objects.filter(shareId=value).exists():
+            Share.objects.create(
+                name = key,
+                shareId = value
+            )
+    return True
